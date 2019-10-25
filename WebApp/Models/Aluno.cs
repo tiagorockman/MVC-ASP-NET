@@ -1,5 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Hosting;
@@ -12,6 +16,8 @@ namespace WebApp.Models
         public string nome { get; set; }
         public string sobrenome { get; set; }
         public string telefone { get; set; }
+
+        public string data { get; set; }
         public int RA { get; set; }
 
         public List<Aluno> ListarAlunos()
@@ -21,6 +27,9 @@ namespace WebApp.Models
             var listaAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
             return listaAlunos;
         }
+
+       
+      
 
         public bool ReescreverArquivo(List<Aluno> listaAlunos)
         {

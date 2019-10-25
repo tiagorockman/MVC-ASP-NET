@@ -7,9 +7,19 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.3.2/bootbox.min.js"></script>"
 </head>
 <body>
-    <h2 id="titulo">Cadastrar aluno</h2>
+
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+               
+            </div>
+        </div>
+    </div>
+
+    <h2 id="titulo"  class="col-md-8">Cadastrar aluno</h2>
     <div class="container">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -30,11 +40,11 @@
                     <input class="form-control" id="RA" type="text" />
                 </div>
                 <div>
-                    <button id="btnSalvar" onclick="Cadastrar()" class="btn btn-success">Cadastrar</button>
-                    <button id="btnCancelar" onclick="Cancelar()" class="btn btn-primary">Limpar</button>
+                    <button id="btnSalvar" onclick="Cadastrar()" class="btn btn-success ">Cadastrar</button>
+                    <button id="btnCancelar" onclick="Cancelar()" class="btn btn-primary ">Limpar</button>
                 </div>
             </div>
-            <table class="table col-md-8">
+            <table class="table table-stripped">
                 <thead>
                     <tr>
                         <td>Nome</td>
@@ -61,8 +71,8 @@
         var tbody = document.querySelector('table tbody');
         var aluno = {};
         function Cadastrar() {
-            
-            aluno.nome = document.querySelector('#Nome').value; 
+
+            aluno.nome = document.querySelector('#Nome').value;
             aluno.sobrenome = document.querySelector('#Sobrenome').value;
             aluno.telefone = document.querySelector('#Telefone').value;
             aluno.RA = document.querySelector('#RA').value;
@@ -73,26 +83,57 @@
                 salvarEstudante('PUT', aluno.id, aluno);
             }
             carregaEstudante();
-            
+
         }
 
         function carregaEstudante() {
             tbody.innerHTML = '';
             //pegando info para a api
             var xhr = new XMLHttpRequest();
-            
-            //chamando o GET  
+
+            //estado de abertura COD 0
+            console.log('UNSENT', xhr.readyState);
+
+
+            //chamando o GET
             //retorna do após o send
             xhr.open('GET', 'http://localhost:21748/Api/Aluno/', true);
 
-            xhr.onload = function () {
-                var estudantes = JSON.parse(this.responseText);
-                for (var indice in estudantes) {
-                    adicionaLinha(estudantes[indice]);
+            //estado aberto criado COD 1
+            console.log('OPENED', xhr.readyState);
+
+            //estado em progresso COD 3
+            xhr.onprogress = function () {
+                console.log('LOADING', xhr.readyState);
+            }
+
+            //estado de erro COD 4
+            xhr.onerror = function () {
+                console.log('LOADING', xhr.readyState);
+            }
+
+            xhr.onreadystatechange = function () {               
+                if (this.readyState == 4) {
+                    if (this.status == 200) {
+                        var estudantes = JSON.parse(this.responseText);
+
+                        //estado de executado COD 4
+                        console.log('DONE', xhr.readyState);
+
+                        for (var indice in estudantes) {
+                            adicionaLinha(estudantes[indice]);
+                        }
+                    }
+                    else if (this.status == 500) //erros
+                    {
+                        var erro = JSON.parse(this.responseText);
+                        console.log(erro.Message);
+                        console.log(erro.ExceptionMessage);
+                    }
                 }
             }
-                xhr.send();           
-            
+            xhr.send();
+
         }
 
         function salvarEstudante(metodo, id, corpo) {
@@ -101,8 +142,8 @@
 
             if (typeof id === "undefined")
                 id = '';
-            
-            //chamando o GET  
+
+            //chamando o GET
             //retorna do após o send
             xhr.open(metodo, 'http://localhost:21748/Api/Aluno/' + id, false);
 
@@ -133,6 +174,8 @@
             btnCancelar.textContent = "Limpar";
             titulo.textContent = "Cadastrar Aluno";
 
+            aluno = {};
+
             document.querySelector('#Nome').value = '';
             document.querySelector('#Sobrenome').value = '';
             document.querySelector('#Telefone').value = '';
@@ -154,30 +197,60 @@
             document.querySelector('#Sobrenome').value = estudante.sobrenome;
             document.querySelector('#Telefone').value = estudante.telefone;
             document.querySelector('#RA').value = estudante.RA;
-            
+
         }
 
         function adicionaLinha(estudante) {
 
             var trow =
                 `<tr><td>${estudante.nome}</td>
-                    <td>${estudante.sobrenome}</td>
-                    <td>${estudante.telefone}</td>
-                    <td>${estudante.RA}</td>
-                    <td><button onclick='editarEstudante(${JSON.stringify(estudante)})'>Editar</button>
-                     <button onclick='ExcluirEstudante(${estudante.id})'>Excluir</button>
-                    </td >
-                </tr>`;
+                            <td>${estudante.sobrenome}</td>
+                            <td>${estudante.telefone}</td>
+                            <td>${estudante.RA}</td>
+                            <td><button class="btn btn-primary" onclick='editarEstudante(${JSON.stringify(estudante)})'>Editar</button>
+                             <button class="btn btn-danger" onclick='excluir(${estudante.id}, "${estudante.nome}")'>Excluir</button>
+                            </td >
+                        </tr>`;
 
             tbody.innerHTML += trow;
-            
+
 
             console.log(estudante.nome);
         }
 
-        funcion ExcluirEstudante(){
+        function excluirEstudante(id) {
+            var xhr = new XMLHttpRequest();
 
-    
+            xhr.open('DELETE', 'http://localhost:21748/Api/Aluno/' + id, true);
+            xhr.send();
+
+            
+        }
+
+        function excluir(id, nome) {
+            
+            bootbox.confirm({
+                message: `Tem certeza que deseja excluir o Estudante ${nome}?`,
+                buttons: {
+                    confirm: {
+                        label: 'Sim',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: 'Não',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        excluirEstudante(id);
+                        carregaEstudante();
+                    }
+                }
+            });          
+        }
+
+
     </script>
 </body>
 </html>

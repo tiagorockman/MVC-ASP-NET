@@ -86,6 +86,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\content\bootbox\bootbox.all.js" />
+    <Content Include="App_Data\content\bootbox\bootbox.all.min.js" />
+    <Content Include="App_Data\content\bootbox\bootbox.js" />
+    <Content Include="App_Data\content\bootbox\bootbox.locales.js" />
+    <Content Include="App_Data\content\bootbox\bootbox.locales.min.js" />
+    <Content Include="App_Data\content\bootbox\bootbox.min.js" />
+    <Content Include="App_Start\Database.mdf" />
+    <Content Include="App_Start\Database_log.ldf">
+      <DependentUpon>Database.mdf</DependentUpon>
+    </Content>
     <Content Include="App_Start\JsonBase.txt" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
@@ -100,6 +110,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Aluno.cs" />
+    <Compile Include="Models\AlunoDAO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -112,9 +123,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
