@@ -1,0 +1,9 @@
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\bin\Debug\App.Repository.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\bin\Debug\App.Repository.pdb
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\bin\Debug\App.Domain.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\bin\Debug\App.Domain.pdb
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\obj\Debug\App.Repository.csprojAssemblyReference.cache
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\obj\Debug\App.Repository.csproj.CoreCompileInputs.cache
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\obj\Debug\App.Repository.csproj.CopyComplete
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\obj\Debug\App.Repository.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Repository\obj\Debug\App.Repository.pdb

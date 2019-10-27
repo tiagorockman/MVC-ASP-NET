@@ -1,8 +1,8 @@
-﻿using System;
+﻿using App.Domain;
+using App.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApp.Models;
@@ -34,7 +34,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                AlunoDAO aluno = new AlunoDAO();
+                var aluno = new AlunoDAO();
                 return Ok(aluno.ListarAlunosDB());
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace WebApp.Controllers
         // GET: api/Aluno/5[
         [HttpGet]
         [Route("Recuperar/{id}")]
-        public Aluno Get(int id)
+        public AlunoDTO Get(int id)
         {
 
             Aluno aluno = new Aluno();
@@ -56,7 +56,7 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [Route("Recuperar/{id}/{nome}/{sobrenome=andrade}")]
-        public Aluno Get(int id, string nome, string sobrenome)
+        public AlunoDTO Get(int id, string nome, string sobrenome)
         {
 
             Aluno aluno = new Aluno();
@@ -72,7 +72,7 @@ namespace WebApp.Controllers
             try
             {
                 Aluno aluno = new Aluno();
-                IEnumerable<Aluno> alunos = aluno.ListarAlunos().Where(x => x.data == data || x.nome == nome);
+                IEnumerable<AlunoDTO> alunos = aluno.ListarAlunos().Where(x => x.data == data || x.nome == nome);
 
                 if (!alunos.Any())
                     return NotFound();
@@ -87,13 +87,16 @@ namespace WebApp.Controllers
         }
 
         // POST: api/Aluno
-        public List<Aluno> Post(Aluno aluno)
+        public IHttpActionResult Post(AlunoDTO aluno)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             try
             {
                 AlunoDAO _alunos = new AlunoDAO();
                 _alunos.InserirAlunoDB(aluno);
-                return _alunos.ListarAlunosDB();
+                return Ok(_alunos.ListarAlunosDB());
             }
             catch (Exception ex)
             {
@@ -104,7 +107,7 @@ namespace WebApp.Controllers
 
 
         // PUT: api/Aluno/5
-        public List<Aluno> Atualizar(int id, [FromBody]Aluno aluno)
+        public List<AlunoDTO> Atualizar(int id, [FromBody]AlunoDTO aluno)
         {
             try
             {

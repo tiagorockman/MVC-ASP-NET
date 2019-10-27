@@ -109,6 +109,8 @@
     <Content Include="App_Start\JsonBase.txt" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
+    <Content Include="login.html" />
+    <Content Include="singin.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -121,7 +123,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Aluno.cs" />
-    <Compile Include="Models\AlunoDAO.cs" />
+    <Compile Include="Models\AlunoDAO_antigo.cs" />
+    <Compile Include="DTOs\AlunoDTO_antiga.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -134,7 +137,16 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\App.Domain\App.Domain.csproj">
+      <Project>{6385488d-0835-4773-aace-f9e835d01982}</Project>
+      <Name>App.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\App.Repository\App.Repository.csproj">
+      <Project>{ced66bb7-dd66-4759-a696-eb248a6bd75d}</Project>
+      <Name>App.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

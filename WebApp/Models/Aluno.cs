@@ -1,37 +1,26 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using App.Domain;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web.Hosting;
+
 
 namespace WebApp.Models
 {
     public class Aluno
     {
-        public int id { get; set; }
-        public string nome { get; set; }
-        public string sobrenome { get; set; }
-        public string telefone { get; set; }
-
-        public string data { get; set; }
-        public int RA { get; set; }
-
-        public List<Aluno> ListarAlunos()
+        
+        public List<AlunoDTO> ListarAlunos()
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Start/JsonBase.txt");
             var json = File.ReadAllText(caminhoArquivo);
-            var listaAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
+            var listaAlunos = JsonConvert.DeserializeObject<List<AlunoDTO>>(json);
             return listaAlunos;
-        }
-
-       
+        }          
       
 
-        public bool ReescreverArquivo(List<Aluno> listaAlunos)
+        public bool ReescreverArquivo(List<AlunoDTO> listaAlunos)
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Start/JsonBase.txt");
             var json = JsonConvert.SerializeObject(listaAlunos, Formatting.Indented);
@@ -41,7 +30,7 @@ namespace WebApp.Models
 
         }
 
-        public Aluno Inserir(Aluno Aluno)
+        public AlunoDTO Inserir(AlunoDTO Aluno)
         {
             var listaAlunos = this.ListarAlunos();
             var maxId = listaAlunos.Max(a => a.id);
@@ -52,7 +41,7 @@ namespace WebApp.Models
             return Aluno;
         }
 
-        public Aluno Atualizar(int id, Aluno aluno)
+        public AlunoDTO Atualizar(int id, AlunoDTO aluno)
         {
             var listaAlunos = this.ListarAlunos();
 

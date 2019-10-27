@@ -1,0 +1,5 @@
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Domain\bin\Debug\App.Domain.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Domain\bin\Debug\App.Domain.pdb
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Domain\obj\Debug\App.Domain.csproj.CoreCompileInputs.cache
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Domain\obj\Debug\App.Domain.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\App.Domain\obj\Debug\App.Domain.pdb

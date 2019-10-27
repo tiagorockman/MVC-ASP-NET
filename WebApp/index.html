@@ -10,16 +10,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/5.3.2/bootbox.min.js"></script>"
 </head>
 <body>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">Acadêmicos</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Aluno <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Disciplina</a>
+                </li>                
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Entrar</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="#">Configuração</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Sair</a>
+                    </div>
+
+            </ul>
+            
+        </div>
+    </nav>
 
     <div id="myModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-               
+
             </div>
         </div>
     </div>
 
-    <h2 id="titulo"  class="col-md-8">Cadastrar aluno</h2>
+    <h2 id="titulo" class="col-md-8">Cadastrar aluno</h2>
     <div class="container">
         <div class="col-md-12">
             <div class="col-md-6">
@@ -112,7 +145,7 @@
                 console.log('LOADING', xhr.readyState);
             }
 
-            xhr.onreadystatechange = function () {               
+            xhr.onreadystatechange = function () {
                 if (this.readyState == 4) {
                     if (this.status == 200) {
                         var estudantes = JSON.parse(this.responseText);
@@ -204,13 +237,13 @@
 
             var trow =
                 `<tr><td>${estudante.nome}</td>
-                            <td>${estudante.sobrenome}</td>
-                            <td>${estudante.telefone}</td>
-                            <td>${estudante.RA}</td>
-                            <td><button class="btn btn-primary" onclick='editarEstudante(${JSON.stringify(estudante)})'>Editar</button>
-                             <button class="btn btn-danger" onclick='excluir(${estudante.id}, "${estudante.nome}")'>Excluir</button>
-                            </td >
-                        </tr>`;
+                                <td>${estudante.sobrenome}</td>
+                                <td>${estudante.telefone}</td>
+                                <td>${estudante.RA}</td>
+                                <td><button class="btn btn-primary" onclick='editarEstudante(${JSON.stringify(estudante)})'>Editar</button>
+                                 <button class="btn btn-danger" onclick='excluir(${estudante.id}, "${estudante.nome}")'>Excluir</button>
+                                </td >
+                            </tr>`;
 
             tbody.innerHTML += trow;
 
@@ -224,11 +257,11 @@
             xhr.open('DELETE', 'http://localhost:21748/Api/Aluno/' + id, true);
             xhr.send();
 
-            
+
         }
 
         function excluir(id, nome) {
-            
+
             bootbox.confirm({
                 message: `Tem certeza que deseja excluir o Estudante ${nome}?`,
                 buttons: {
@@ -247,7 +280,7 @@
                         carregaEstudante();
                     }
                 }
-            });          
+            });
         }
 
 
