@@ -8,7 +8,7 @@ using System.Web;
 
 namespace WebApp.Models
 {
-      
+
     public class AlunoDAO
     {
         private string stringConexao = ConfigurationManager.ConnectionStrings["ConexaoDev"].ConnectionString;
@@ -22,50 +22,145 @@ namespace WebApp.Models
 
 
         //LISTA ALUNO DO DB
-        public List<Aluno> ListarAlunosDB()
+        public List<Aluno> ListarAlunosDB(int? id = null)
         {
-           
-            var listaAlunos = new List<Aluno>();
-            IDbCommand dbCommand = connection.CreateCommand();
-            dbCommand.CommandText = "SELECT * FROM TB_ALUNOS";
 
-            IDataReader reader = dbCommand.ExecuteReader();
-            while (reader.Read())
+            try
             {
-                Aluno aluno = new Aluno();
-                aluno.id = Convert.ToInt32(reader["id"]);
-                aluno.nome = reader["nome"].ToString();
-                aluno.sobrenome = reader["sobrenome"].ToString();
-                aluno.telefone = reader["telefone"].ToString();
-                aluno.data = reader["data"].ToString();
-                aluno.RA = Convert.ToInt32(reader["RA"]);
 
-                listaAlunos.Add(aluno);
+                var listaAlunos = new List<Aluno>();
+                IDbCommand dbCommand = connection.CreateCommand();
+                if (id == null)
+                    dbCommand.CommandText = "SELECT * FROM TB_ALUNOS";
+                else
+                    dbCommand.CommandText = "SELECT * FROM TB_ALUNOS where id = " + id;
+
+                IDataReader reader = dbCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    var aluno = new Aluno()
+                    {
+                        id = Convert.ToInt32(reader["id"]),
+                        nome = reader["nome"].ToString(),
+                        sobrenome = reader["sobrenome"].ToString(),
+                        telefone = reader["telefone"].ToString(),
+                        data = reader["data"].ToString(),
+                        RA = Convert.ToInt32(reader["RA"]),
+                    };
+
+                    listaAlunos.Add(aluno);
+                }
+                return listaAlunos;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
             }
 
-            connection.Close();
-            connection.Dispose();
 
-            return listaAlunos;
         }
 
         public void InserirAlunoDB(Aluno aluno)
         {
-            IDbCommand insertdbCommand = connection.CreateCommand();
-            insertdbCommand.CommandText = "Insert into TB_ALUNOS (nome, sobrenome, telefone, data, RA) values (@nome, @sobrenome, @telefone, @data, @RA)";
+            try
+            {
+                IDbCommand insertdbCommand = connection.CreateCommand();
+                insertdbCommand.CommandText = "Insert into TB_ALUNOS (nome, sobrenome, telefone, data, RA) values (@nome, @sobrenome, @telefone, @data, @RA)";
 
-            IDbDataParameter parameterNome = new SqlParameter("nome", aluno.nome);
-            insertdbCommand.Parameters.Add(parameterNome);
-            IDbDataParameter parameterSobrenome = new SqlParameter("sobrenome", aluno.sobrenome);
-            insertdbCommand.Parameters.Add(parameterSobrenome);
-            IDbDataParameter parameterTel = new SqlParameter("telefone", aluno.telefone);
-            insertdbCommand.Parameters.Add(parameterTel);
-            IDbDataParameter parameterData = new SqlParameter("data", aluno.data);
-            insertdbCommand.Parameters.Add(parameterData);
-            IDbDataParameter parameterRA = new SqlParameter("RA", aluno.RA);
-            insertdbCommand.Parameters.Add(parameterRA);
+                IDbDataParameter parameterNome = new SqlParameter("nome", aluno.nome);
+                insertdbCommand.Parameters.Add(parameterNome);
+                IDbDataParameter parameterSobrenome = new SqlParameter("sobrenome", aluno.sobrenome);
+                insertdbCommand.Parameters.Add(parameterSobrenome);
+                IDbDataParameter parameterTel = new SqlParameter("telefone", aluno.telefone);
+                insertdbCommand.Parameters.Add(parameterTel);
+                IDbDataParameter parameterData = new SqlParameter("data", aluno.data);
+                insertdbCommand.Parameters.Add(parameterData);
+                IDbDataParameter parameterRA = new SqlParameter("RA", aluno.RA);
+                insertdbCommand.Parameters.Add(parameterRA);
 
-            insertdbCommand.ExecuteNonQuery();
+                insertdbCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+        }
+
+        public void AtualizarDB(int id, Aluno aluno)
+        {
+            try
+            {
+                IDbCommand updatedbCommand = connection.CreateCommand();
+                updatedbCommand.CommandText = @"UPDATE TB_ALUNOS SET nome = @nome,
+                                                sobrenome = @sobrenome, 
+                                                telefone = @telefone, 
+                                                data = @data
+                                                RA = @RA
+                                                WHERE ID = @id";
+
+                IDbDataParameter parameterNome = new SqlParameter("nome", aluno.nome);
+                updatedbCommand.Parameters.Add(parameterNome);
+                IDbDataParameter parameterSobrenome = new SqlParameter("sobrenome", aluno.sobrenome);
+                updatedbCommand.Parameters.Add(parameterSobrenome);
+                IDbDataParameter parameterTel = new SqlParameter("telefone", aluno.telefone);
+                updatedbCommand.Parameters.Add(parameterTel);
+                IDbDataParameter parameterData = new SqlParameter("data", aluno.data);
+                updatedbCommand.Parameters.Add(parameterData);
+                IDbDataParameter parameterRA = new SqlParameter("RA", aluno.RA);
+                updatedbCommand.Parameters.Add(parameterRA);
+
+                IDbDataParameter parameterId = new SqlParameter("id", id);
+                updatedbCommand.Parameters.Add(parameterId);
+
+                updatedbCommand.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
+        }
+
+        public void DeletarDB(int id)
+        {
+            try
+            {
+                IDbCommand updatedbCommand = connection.CreateCommand();
+                updatedbCommand.CommandText = @"Delete from TB_ALUNOS WHERE ID = @id";
+
+                IDbDataParameter parameterId = new SqlParameter("id", id);
+                updatedbCommand.Parameters.Add(parameterId);
+
+                updatedbCommand.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+                connection.Dispose();
+            }
+
         }
     }
 

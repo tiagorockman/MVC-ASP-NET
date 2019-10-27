@@ -60,7 +60,7 @@ namespace WebApp.Controllers
         {
 
             Aluno aluno = new Aluno();
-            return aluno.ListarAlunos().Where(x => x.id == id && x.nome == nome && x.sobrenome == sobrenome ).FirstOrDefault();
+            return aluno.ListarAlunos().Where(x => x.id == id && x.nome == nome && x.sobrenome == sobrenome).FirstOrDefault();
         }
 
         [HttpGet]
@@ -94,28 +94,47 @@ namespace WebApp.Controllers
                 AlunoDAO _alunos = new AlunoDAO();
                 _alunos.InserirAlunoDB(aluno);
                 return _alunos.ListarAlunosDB();
-            }catch(Exception ex)
-            {
-               throw new Exception($"Ero ao Inserir Aluno: Erro => { ex.Message }");
             }
-            
+            catch (Exception ex)
+            {
+                throw new Exception($"Ero ao Inserir Aluno: Erro => { ex.Message }");
+            }
+
         }
 
 
         // PUT: api/Aluno/5
-        public Aluno Put(int id, [FromBody]Aluno aluno)
+        public List<Aluno> Atualizar(int id, [FromBody]Aluno aluno)
         {
-            Aluno _aluno = new Aluno();
+            try
+            {
+                AlunoDAO _aluno = new AlunoDAO();
 
-            return _aluno.Atualizar(id, aluno);
+                _aluno.AtualizarDB(id, aluno);
+
+                return _aluno.ListarAlunosDB(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ero ao Atualizar Aluno: Erro => { ex.Message }");
+            }
         }
 
         // DELETE: api/Aluno/5
         public bool Delete(int id)
         {
-            Aluno _aluno = new Aluno();
+            try
+            {
+                AlunoDAO _aluno = new AlunoDAO();
 
-            return _aluno.Deletar(id);
+                _aluno.DeletarDB(id);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ero ao Atualizar Aluno: Erro => { ex.Message }");
+            }
         }
     }
 }
