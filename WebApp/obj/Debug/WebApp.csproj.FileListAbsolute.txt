@@ -140,3 +140,16 @@ C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.CodeDo
 C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\obj\Debug\WebApp.csproj.CopyComplete
 C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\obj\Debug\WebApp.dll
 C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\obj\Debug\WebApp.pdb
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Cors.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Owin.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\System.Web.Http.Owin.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.xml
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Cors.xml
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\System.Web.Http.Owin.xml
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Security.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Security.xml
+C:\Users\tiago\source\repos\tiagorockman\MVC-ASP-NET\WebApp\bin\Microsoft.Owin.Security.OAuth.xml

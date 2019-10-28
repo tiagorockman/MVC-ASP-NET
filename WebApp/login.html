@@ -11,11 +11,11 @@
     <link href="singin.css" rel="stylesheet" />
 </head>
 <body>
-    <form class="form-signin">
+    <form class="form-signin" onsubmit="login()">
         <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Acadêmico</h1>
-        <label for="inputEmail" class="sr-only">Email</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="" autofocus="">
+        <label for="inputNome" class="sr-only">Nome</label>
+        <input type="text" id="inputNome" class="form-control" placeholder="Nome" required="" autofocus="">
         <label for="inputPassword" class="sr-only">Senha</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Senha" required="">
         <div class="checkbox mb-3">
@@ -24,8 +24,53 @@
             </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-
     </form>
+
+    <script>
+        var login = function () {
+            event.preventDefault();
+            var nome = document.querySelector('inputNome');
+            var password = document.querySelector('inputPassword');
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:21748/token', true);
+
+            xhr.onload = function () {
+                var resultado = JSON.parse(this.responseText);
+                console.log(`${resultado.token_type} ${resultado.access_token}`);
+                verificar();
+            }
+
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.send(`grant_type=password&username=${nome}&password=${password}`);
+
+        }
+        var verificar = function (auth) {
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', 'http://localhost:21748/Recuperar', true);
+              xhr.setRequestHeader('Authorization', auth);
+
+            //estado aberto criado COD 1
+            console.log('OPENED', xhr.readyState);
+
+            //estado em progresso COD 3
+            xhr.onprogress = function () {
+                console.log('LOADING', xhr.readyState);
+            }
+
+            //estado de erro COD 4
+            xhr.onerror = function () {
+                console.log('LOADING', xhr.readyState);
+            }
+
+            xhr.onreadystatechange = function () {
+                var result = this.responseText;
+                document.write(result);
+            }
+            xhr.send();
+        }
+    </script>
 </body>
 
 </html>
